@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+int main() {
+    // Number of processes
+    int n = 6;
+
+    // Arrival times and burst times (hardcoded)
+    int arrival[] = {0, 1, 2, 3, 4, 4};
+    int burst[]   = {7, 4, 15, 11, 20, 9};
+
+    int remaining[6], completion[6], waiting[6], turnaround[6];
+    int time = 0, done = 0;
+    int quantum = 4;
+
+    // Copy burst time to remaining time
+    for (int i = 0; i < n; i++) {
+        remaining[i] = burst[i];
+    }
+
+    printf("\nExecution Order:\n");
+
+    // Loop until all processes are done
+    while (done < n) {
+        int executed = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (arrival[i] <= time && remaining[i] > 0) {
+                // Run process
+                int run_time = (remaining[i] > quantum) ? quantum : remaining[i];
+                printf("P%d ran for %d units\n", i + 1, run_time);
+
+                time += run_time;
+                remaining[i] -= run_time;
+
+                if (remaining[i] == 0) {
+                    completion[i] = time;
+                    done++;
+                }
+
+                executed = 1;
+            }
+        }
+
+        // If no process was executed in this cycle, increment time
+        if (executed == 0) {
+            time++;
+        }
+    }
+
+    // Calculate turnaround and waiting times
+    printf("\nFinal Results:\n");
+    printf("PID  Arrival  Burst  Completion  Turnaround  Waiting\n");
+
+    for (int i = 0; i < n; i++) {
+        turnaround[i] = completion[i] - arrival[i];
+        waiting[i] = turnaround[i] - burst[i];
+
+        printf("P%-3d %-8d %-6d %-11d %-11d %-7d\n",
+               i + 1, arrival[i], burst[i], completion[i], turnaround[i], waiting[i]);
+    }
+
+    return 0;
+}
