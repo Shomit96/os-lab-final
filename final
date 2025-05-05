@@ -10,7 +10,7 @@ int main() {
 
     int remaining[6], completion[6], waiting[6], turnaround[6];
     int time = 0, done = 0;
-    int quantum = 4;
+    int quantum = 5;  // Time quantum changed to 5
 
     // Copy burst time to remaining time
     for (int i = 0; i < n; i++) {
