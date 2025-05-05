@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 int main() {
-    // Number of processes
+    
     int n = 6;
 
-    // Arrival times and burst times (hardcoded)
+   
     int arrival[] = {0, 1, 2, 3, 4, 4};
     int burst[]   = {7, 4, 15, 11, 20, 9};
 
@@ -12,14 +12,14 @@ int main() {
     int time = 0, done = 0;
     int quantum = 5;  // Time quantum changed to 5
 
-    // Copy burst time to remaining time
+
     for (int i = 0; i < n; i++) {
         remaining[i] = burst[i];
     }
 
     printf("\nExecution Order:\n");
 
-    // Loop until all processes are done
+   
     while (done < n) {
         int executed = 0;
 
@@ -41,13 +41,13 @@ int main() {
             }
         }
 
-        // If no process was executed in this cycle, increment time
+       
         if (executed == 0) {
             time++;
         }
     }
 
-    // Calculate turnaround and waiting times
+   
     printf("\nFinal Results:\n");
     printf("PID  Arrival  Burst  Completion  Turnaround  Waiting\n");
 
